@@ -8,15 +8,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-
+/**
+ * 定义了一个用于员工登录返回数据的视图对象（VO）类
+*/
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-@ApiModel(description = "员工登录返回的数据格式")
-public class EmployeeLoginVO implements Serializable {
+@Builder // Lombok 注解，提供一个构造器模式，方便对象的创建
+@NoArgsConstructor // Lombok 注解，生成一个无参构造函数。
+@AllArgsConstructor //生成一个全参构造函数
+@ApiModel(description = "员工登录返回的数据格式") //Swagger 注解，用于描述模型类，生成 API 文档时会显示这个描述。
+public class EmployeeLoginVO implements Serializable { //使对象可以被序列化和反序列化，通常用于网络传输或持久化存储
 
-    @ApiModelProperty("主键值")
+    @ApiModelProperty("主键值") //Swagger 注解，用于描述字段的含义，生成 API 文档时会显示这个描述
     private Long id;
 
     @ApiModelProperty("用户名")

@@ -1,6 +1,7 @@
 package com.sky.controller.admin;
 
 import com.sky.constant.JwtClaimsConstant;
+import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
 import com.sky.entity.Employee;
 import com.sky.properties.JwtProperties;
@@ -8,6 +9,7 @@ import com.sky.result.Result;
 import com.sky.service.EmployeeService;
 import com.sky.utils.JwtUtil;
 import com.sky.vo.EmployeeLoginVO;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,6 +41,7 @@ public class EmployeeController {
      */
     @PostMapping("/login")
     public Result<EmployeeLoginVO> login(@RequestBody EmployeeLoginDTO employeeLoginDTO) {
+        //log.info 记录一条日志，内容是员工登录的请求数据。
         log.info("员工登录：{}", employeeLoginDTO);
 
         Employee employee = employeeService.login(employeeLoginDTO);
@@ -51,6 +54,7 @@ public class EmployeeController {
                 jwtProperties.getAdminTtl(),
                 claims);
 
+        //EmployeeLoginVO 被用来封装登录成功后的员工信息和 JWT 令牌，并通过 Result 对象返回给客户端。
         EmployeeLoginVO employeeLoginVO = EmployeeLoginVO.builder()
                 .id(employee.getId())
                 .userName(employee.getUsername())
@@ -71,4 +75,16 @@ public class EmployeeController {
         return Result.success();
     }
 
+    /**
+     * 新增员工
+     * @param employeeDTO
+     * @return
+     */
+    @PostMapping
+    @ApiOperation("新增员工")
+    public Result add(@RequestBody EmployeeDTO employeeDTO) {
+        log.info("新增员工{}", employeeDTO);
+        employeeService.add(employeeDTO);
+        return Result.success();
+    }
 }
